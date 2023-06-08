@@ -12,12 +12,13 @@ public:
 	sf::Vector2f moveSpeed;
 
 	void move();
-	bool detectCollision();
+	void getCollided(bool);
 
 	bool isActive();
 	sf::Sprite& getSprite();
 
 	bool active;
+	bool collision;
 	int lifeSpan = 5;
 
 protected:

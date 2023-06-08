@@ -44,7 +44,8 @@ void Game::HandleUpdate()
 
 	// tell enemies to move
 	for (int i = 0; i < this->entityManager->enemies.size(); i++) {
-		this->entityManager->enemies.at(i)->doMovement();
+		if (this->entityManager->enemies.at(i)->alive == true)
+			this->entityManager->enemies.at(i)->doMovement();
 	}
 
 	// if bullets are active, then move them
@@ -52,6 +53,18 @@ void Game::HandleUpdate()
 		if (this->entityManager->getPlayer()->bullets.at(i)->isActive()) {
 			this->entityManager->getPlayer()->bullets.at(i)->move();
 		} // TODO: track which are inactive and remove them
+	}
+	
+
+	// Check for collisions between bullets and enemies
+	for (int i = 0; i < this->entityManager->enemies.size(); i++) {
+		for (int j = 0; j < this->entityManager->getPlayer()->bullets.size(); j++) {
+			// if enemy is alive and bullet active and bullet overlaps enemy 
+			if ((this->entityManager->enemies.at(i)->alive == true)&& (this->entityManager->getPlayer()->bullets.at(j)->active == true) && (this->collisionHandler(this->entityManager->enemies.at(i)->getEnemyEntity().getPosition(), this->entityManager->getPlayer()->bullets.at(j)->getSprite().getPosition()))) {
+				this->entityManager->enemies.at(i)->alive = false; // kill enemy
+				this->entityManager->getPlayer()->bullets.at(j)->active = false; // deactivate bullet
+			}
+		}
 	}
 
 }
@@ -64,7 +77,8 @@ void Game::HandleDraw()
 
 	// Draw Enemies
 	for (int i = 0; i < this->entityManager->enemies.size(); i++) {
-		this->targetWindow->getWindow().draw(this->entityManager->enemies.at(i)->getEnemyEntity());
+		if (this->entityManager->enemies.at(i)->alive)
+			this->targetWindow->getWindow().draw(this->entityManager->enemies.at(i)->getEnemyEntity());
 	}
 
 	// Draw active bullets
@@ -76,4 +90,21 @@ void Game::HandleDraw()
 
 
 	this->targetWindow->getWindow().display(); // update display
+}
+	// rect 1 = player rect2 = bullet
+bool Game::collisionHandler(sf::Vector2f rect1, sf::Vector2f rect2)
+{
+	std::cout << rect1.x << "and" << rect2.y << std::endl;
+
+	if (rect1.x < rect2.x + 5 &&
+		rect1.x + 25 > rect2.x &&
+		rect1.y < rect2.y + 5 &&
+		25 + rect1.y > rect2.y) {
+		return true;
+	}
+	else {
+		return false;
+	}
+
+	
 }

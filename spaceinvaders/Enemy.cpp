@@ -9,6 +9,7 @@ Enemy::Enemy(float x, float y)
 
 	this->moveSpeed = sf::Vector2f(1.0f, 0.f);
 	this->movingLeft = false;
+	this->alive = true;
 }
 
 sf::Sprite& Enemy::getEnemyEntity()

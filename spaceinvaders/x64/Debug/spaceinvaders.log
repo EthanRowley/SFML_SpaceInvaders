@@ -1,6 +1,2 @@
-﻿  EntityManager.cpp
-  Game.cpp
-  main.cpp
-  Player.cpp
-  Generating Code...
+﻿  MyWindow.cpp
   spaceinvaders.vcxproj -> C:\Users\ethan\Desktop\SFMLProjects\space invaders\spaceinvaders\x64\Debug\spaceinvaders.exe

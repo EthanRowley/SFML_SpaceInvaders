@@ -8,6 +8,7 @@ Bullet::Bullet(sf::Vector2f initPos)
 	this->bulletSprite.setTexture(this->bulletTexture);
 	this->moveSpeed = sf::Vector2f(0.f, -5.0f);
 	this->active = true;
+	this->collision = false;
 	this->bulletSprite.setPosition(initPos);
 }
 
@@ -23,7 +24,7 @@ void Bullet::move()
 	}
 
 	// deactive bullet on collision
-	if (this->detectCollision()) {
+	if (this->collision) {
 		this->active = false;
 	}
 
@@ -31,10 +32,9 @@ void Bullet::move()
 	this->bulletSprite.move(this->moveSpeed);
 }
 
-bool Bullet::detectCollision()
+void Bullet::getCollided(bool status)
 {
-
-	return false;
+	this->collision = status;
 }
 
 bool Bullet::isActive()

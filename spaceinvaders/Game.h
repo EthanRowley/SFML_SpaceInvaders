@@ -1,6 +1,7 @@
 #pragma once
 #include "MyWindow.h"
 #include "EntityManager.h"
+#include "SFML/Graphics.hpp"
 
 class Game
 {
@@ -15,6 +16,8 @@ public:
 	void HandleInput();
 	void HandleUpdate();
 	void HandleDraw();
+
+	bool collisionHandler(sf::Vector2f, sf::Vector2f);
 
 	void StartGame();
 

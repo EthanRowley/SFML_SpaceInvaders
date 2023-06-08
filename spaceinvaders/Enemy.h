@@ -13,6 +13,7 @@ public:
 	sf::Vector2f moveSpeed;
 
 	bool movingLeft;
+	bool alive;
 	void doMovement();
 
 protected:
