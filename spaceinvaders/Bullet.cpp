@@ -22,12 +22,6 @@ void Bullet::move()
 	if (this->bulletSprite.getPosition().y <= 0) {
 		this->active = false;
 	}
-
-	// deactive bullet on collision
-	if (this->collision) {
-		this->active = false;
-	}
-
 	// if still on screen then move
 	this->bulletSprite.move(this->moveSpeed);
 }

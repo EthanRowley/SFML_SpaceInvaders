@@ -4,7 +4,7 @@
 // Create game window
 MyWindow::MyWindow(int width, int height)
 {
-	this->window.create(sf::VideoMode(width, height), "Hello", sf::Style::Default); 
+	this->window.create(sf::VideoMode(width, height), "Space Invaders", sf::Style::Default); 
 	this->setWindowWidthHeight(width, height); // set width and heigh variables
 	this->window.setFramerateLimit(60);
 }

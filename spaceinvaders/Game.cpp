@@ -2,7 +2,9 @@
 #include "MyWindow.h"
 #include "SFML/Graphics.hpp"
 #include "EntityManager.h"
+#include "Enemy.h"
 #include <iostream>
+#include <vector>
 
 Game::Game(MyWindow* w, EntityManager* e)
 {
@@ -54,19 +56,22 @@ void Game::HandleUpdate()
 			this->entityManager->getPlayer()->bullets.at(i)->move();
 		} // TODO: track which are inactive and remove them
 	}
-	
 
 	// Check for collisions between bullets and enemies
-	for (int i = 0; i < this->entityManager->enemies.size(); i++) {
-		for (int j = 0; j < this->entityManager->getPlayer()->bullets.size(); j++) {
-			// if enemy is alive and bullet active and bullet overlaps enemy 
-			if ((this->entityManager->enemies.at(i)->alive == true)&& (this->entityManager->getPlayer()->bullets.at(j)->active == true) && (this->collisionHandler(this->entityManager->enemies.at(i)->getEnemyEntity().getPosition(), this->entityManager->getPlayer()->bullets.at(j)->getSprite().getPosition()))) {
-				this->entityManager->enemies.at(i)->alive = false; // kill enemy
-				this->entityManager->getPlayer()->bullets.at(j)->active = false; // deactivate bullet
+	for (int bulletIndex = 0; bulletIndex < this->entityManager->getPlayer()->bullets.size(); bulletIndex++) {
+		if (this->entityManager->getPlayer()->bullets.at(bulletIndex)->active) {
+			for (int enemyIndex = 0; enemyIndex < this->entityManager->enemies.size(); enemyIndex++) {
+				// if enemy is alive and bullet active and bullet overlaps enemy 
+
+				if (this->entityManager->enemies.at(enemyIndex)->alive == true && this->collisionHandler(this->entityManager->enemies.at(enemyIndex)->getEnemyEntity().getPosition(), this->entityManager->getPlayer()->bullets.at(bulletIndex)->getSprite().getPosition()))
+				{
+					this->entityManager->enemies.at(enemyIndex)->alive = false; // kill enemy
+					this->entityManager->getPlayer()->bullets.at(bulletIndex)->active = false; // deactivate bullet
+				}
 			}
 		}
+		
 	}
-
 }
 
 void Game::HandleDraw()
@@ -94,7 +99,6 @@ void Game::HandleDraw()
 	// rect 1 = player rect2 = bullet
 bool Game::collisionHandler(sf::Vector2f rect1, sf::Vector2f rect2)
 {
-	std::cout << rect1.x << "and" << rect2.y << std::endl;
 
 	if (rect1.x < rect2.x + 5 &&
 		rect1.x + 25 > rect2.x &&

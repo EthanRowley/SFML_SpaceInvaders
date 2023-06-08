@@ -6,7 +6,7 @@ Enemy::Enemy(float x, float y)
 	this->enemyTexure.loadFromFile("enemy.png");
 	this->enemyEntity.setTexture(this->enemyTexure);
 	this->enemyEntity.setPosition(sf::Vector2f(x,y));
-
+	
 	this->moveSpeed = sf::Vector2f(1.0f, 0.f);
 	this->movingLeft = false;
 	this->alive = true;
